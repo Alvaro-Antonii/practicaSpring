@@ -20,10 +20,29 @@ public class UsuarioDaoImple implements UsuarioDao{
 	private EntityManager entityManager;
 	
 	@Override
-	public List<Usuario> obtenerUsuario() {
-		String query = "from Usuario";
-		List<Usuario> resultado = entityManager.createQuery(query).getResultList();
+	@Transactional
+	public List<Usuario> getUsuarios() {	
+		
+		String query="FROM Usuario";
+		List<Usuario> resultado=entityManager.createQuery(query).getResultList();
+		
 		return resultado;
+		
+		
 	}
+
+	@Override
+	public void eliminar(Long id){
+		Usuario usuario =entityManager.find(Usuario.class, id);
+		entityManager.remove(usuario);
+	}
+
+
+	@Override
+	public void registrar(Usuario usuario){
+		
+		entityManager.merge(usuario);
+	}
+
 
 }

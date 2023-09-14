@@ -8,5 +8,10 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface UsuarioDao {
 	
-	List<Usuario> obtenerUsuario();
+	
+
+	List<Usuario>  getUsuarios(); //cambie obtenerUsuarios por getUsuarios
+
+	void eliminar(Long id);
+	void registrar(Usuario usuario);
 }
