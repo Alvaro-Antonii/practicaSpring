@@ -11,38 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dao.UsuarioDao;
 import com.example.demo.models.Usuario;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 @RestController
 public class UsuarioController {
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
-	@RequestMapping(value="lista")
-		
-		public List<Usuario> msotrarLista() {
-			List<Usuario> lista = new ArrayList<>();
-			Usuario usuario1 = new Usuario();
-			usuario1.setId(3L);
-			usuario1.setNombre("Jose");
-			usuario1.setApellido("Perez");
-			usuario1.setEmail("prejose@gmail.com");
-			usuario1.setTelefono("26135675");
-			
-			Usuario usuario2 = new Usuario();
-			
-			usuario2.setId(4L);
-			usuario2.setNombre("Julieta");
-			usuario2.setApellido("Flores");
-			usuario2.setEmail("pepe@gmail.com");
-			usuario2.setTelefono("26121213");
-			
-			lista.add(usuario1);
-			lista.add(usuario2);
-			
-			
-			return lista;
-			
-			
-		}
+	
 	
 	@RequestMapping(value="api/usuarios")
 	public List<Usuario> getUsuarios(){
@@ -59,12 +35,14 @@ public class UsuarioController {
 
 	@RequestMapping(value="api/usuarios", method=RequestMethod.POST)
 	public void registrarUsuario(@RequestBody Usuario usuario){
+		
+		Argon2 argon2;
+		argon2= Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+		String pass_hasheado=argon2.hash(1, 1024, 1, usuario.getPassword());
+		usuario.setPassword(pass_hasheado);
 		usuarioDao.registrar(usuario);
 		
 	}
-	
-	
-	
 	
 	
 }

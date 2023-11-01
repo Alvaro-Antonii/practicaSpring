@@ -19,8 +19,9 @@ $(document).ready(function() {
         alert("Las contraseñas no coinciden")
         return;
     }
-
-
+    
+		
+		
  
   const request = await fetch('api/usuarios', {
     method: 'POST',
@@ -30,5 +31,14 @@ $(document).ready(function() {
     },
     body: JSON.stringify(datos)
   });
-  const usuarios = await request.json();
+  // const usuarios = await request.json();
+  
+ 	alert("Usuario registrado con éxito");
+ 	window.location.href='login.html';
+ 
+ 
+ 
+ 
+  
+  
 }
